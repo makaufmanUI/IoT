@@ -1,7 +1,10 @@
 #include "RTIMULib.h"
 
+
+
 int main()
 {
+	
     int sampleCount = 0;
     int sampleRate = 0;
     uint64_t rateTimer;
@@ -125,7 +128,8 @@ int main()
                 sampleCount = 0;
                 rateTimer = now;
             }
-        }
+        
+		}
     }
 }
 
