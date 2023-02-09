@@ -20,8 +20,7 @@ int main()
     RTPressure * pressure = RTPressure::createPressure(settings);
     RTHumidity * humidity = RTHumidity::createHumidity(settings);
 
-    if ((imu == NULL) || (imu->IMUType() == RTIMU_TYPE_NULL)) 
-	{
+    if ((imu == NULL) || (imu->IMUType() == RTIMU_TYPE_NULL)) {
         printf("No IMU found\n");
         exit(1);
     }
@@ -41,15 +40,13 @@ int main()
 
     //  set up pressure sensor
 
-    if (pressure != NULL)
-    {
+    if (pressure != NULL) {
         pressure->pressureInit();
     }
 
     //  set up humidity sensor
 
-    if (humidity != NULL)
-    {
+    if (humidity != NULL) {
         humidity->humidityInit();
     }
 
@@ -77,15 +74,13 @@ int main()
 
             //  add the pressure data to the structure
 
-            if (pressure != NULL)
-            {
+            if (pressure != NULL) {
                 pressure->pressureRead(imuData);
             }
 
             //  add the humidity data to the structure
 
-            if (humidity != NULL)
-            {
+            if (humidity != NULL) {
                 humidity->humidityRead(imuData);
             }
 
@@ -101,19 +96,15 @@ int main()
             //        values are only displayed at a certain interval.			
             if ((now - displayTimer) > 1000000) 
 			{ 
-				
                 printf("Sample rate %d: %s\n", sampleRate, RTMath::displayDegrees("", imuData.fusionPose));
 
-                if (pressure != NULL) 
-				{
+                if (pressure != NULL) {
                     printf("Pressure: %4.1f, height above sea level: %4.1f, temperature: %4.1f",
                            imuData.pressure, RTMath::convertPressureToHeight(imuData.pressure), imuData.temperature);
                 }
 				
-                if (humidity != NULL) 
-				{
-                    printf(", humidity: %4.1f",
-                           imuData.humidity);
+                if (humidity != NULL) {
+                    printf(", humidity: %4.1f", imuData.humidity);
                 }
                 printf("\n");
 
@@ -123,8 +114,7 @@ int main()
 
             //  update rate every second
 
-            if ((now - rateTimer) > 1000000) 
-			{
+            if ((now - rateTimer) > 1000000) {
                 sampleRate = sampleCount;
                 sampleCount = 0;
                 rateTimer = now;
