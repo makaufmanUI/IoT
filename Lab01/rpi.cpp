@@ -11,6 +11,8 @@
 
 
 
+
+
 /*  Computes the average of the last 10 samples.
  *  @param dataVector: The vector that holds the previous 10 measurements.  */
 RTFLOAT getLast10Average(std::vector<RTFLOAT> dataVector)
@@ -38,7 +40,6 @@ int main()
     std::vector<RTFLOAT> rollData;
     std::vector<RTFLOAT> pitchData;
     std::vector<RTFLOAT> yawData;
-
     std::vector<RTFLOAT> pressureData;
     
 
@@ -67,16 +68,13 @@ int main()
         pressure->pressureInit();
     }
 
-
     //  set up humidity sensor
     if (humidity != NULL) {
         humidity->humidityInit();
     }
 
-
     //  set up for rate timer
     rateTimer = displayTimer = RTMath::currentUSecsSinceEpoch();
-
 
 
     while (1) 
@@ -97,47 +95,46 @@ int main()
 		{
             RTIMU_DATA imuData = imu->getIMUData();
 
-
-
             // Get individual components of imu data
             RTFLOAT roll  = imuData.fusionPose.x() * RTMATH_RAD_TO_DEGREE
             RTFLOAT pitch = imuData.fusionPose.y() * RTMATH_RAD_TO_DEGREE
             RTFLOAT yaw   = imuData.fusionPose.z() * RTMATH_RAD_TO_DEGREE
 
-
+            // Add latest roll measurement to its vector
             rollData.emplace_back(roll);
             if (rollData.size() > 10) {
                 rollData.erase(rollData.begin());
             }
 
+            // Add latest pitch measurement to its vector
             pitchData.emplace_back(pitch);
             if (pitchData.size() > 10) {
                 pitchData.erase(pitchData.begin());
             }
 
+            // Add latest yaw measurement to its vector
             yawData.emplace_back(yaw);
             if (yawData.size() > 10) {
                 yawData.erase(yawData.begin());
             }
 
-
+            // Compute averages of last 10 gyro measurements
             RTFLOAT rollAverage  = getLast10Average(rollData);
             RTFLOAT pitchAverage = getLast10Average(pitchData);
             RTFLOAT yawAverage   = getLast10Average(yawData);
 
 
-
-            
-
-
-
             //  add the pressure data to the structure
             if (pressure != NULL) {
                 pressure->pressureRead(imuData);
+
+                // Add latest pressure measurement to its vector
                 pressureData.emplace_back(imuData.pressure);
                 if (pressureData.size() > 10) {
                     pressureData.erase(pressureData.begin());
                 }
+                
+                // Compute the average of the last 10 measurements
                 RTFLOAT pressureAverage = getLast10Average(pressureData);
             }
 
