@@ -1,2 +1,2 @@
 # IoT
-Spring 2023 IoT Course Material
+Spring 2023 IoT
