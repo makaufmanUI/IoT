@@ -81,34 +81,33 @@ void loop()
 
 
     // Print data
-
-    Serial.print("Time: ");             // Print time (in seconds)
-    Serial.print(millis() / 1000.0);    // Print time in seconds
+    Serial.print("Time: ");
+    Serial.print(millis() / 1000.0);
     Serial.println("s");
     
-    Serial.print("  > Humidity: ");     // Print humidity
+    Serial.print("  > Humidity: ");
     Serial.print(humidity);
     Serial.print("%  (avg: ");
     Serial.print(humidity_avg);
     Serial.println("%)");
 
-    Serial.print("  > Pressure: ");     // Print pressure
+    Serial.print("  > Pressure: ");
     Serial.print(pressure);
     Serial.print("psi");
     Serial.print("  (avg: ");
     Serial.print(pressure_avg);
     Serial.println("psi)");
 
-    Serial.print("  > Temperature: ");  // Print temperature
+    Serial.print("  > Temperature: ");
     Serial.print(temperature);
     Serial.print("°F");
     Serial.print("  (avg: ");
     Serial.print(temperature_avg);
     Serial.println("°F)");
 
-
     Serial.println();
 
+    
     delay(1000);    // Wait 1 second
 }
 
