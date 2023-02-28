@@ -9,7 +9,7 @@ Using a Firebase Realtime Database, the `nodeimu` and `sense-hat-led` libraries,
   3. Update the Sense HAT's LED matrix according to the boolean value
 
 # Useful Links
-`nodeimu` repository: https://github.com/rupnikj/nodeimu
+`nodeimu` repo: https://github.com/rupnikj/nodeimu
 
 `nodeimu` readme: https://www.npmjs.com/package/@trbll/nodeimu
 
