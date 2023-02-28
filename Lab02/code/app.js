@@ -287,7 +287,7 @@ function UpdateLight() {
 
 
 
-// // Function to get the light data from the Firebase database
+
 // function GetLight() {
 //     get(ref(database, 'light')).then((snapshot) => {
 //         if (snapshot.exists()) {
@@ -312,7 +312,7 @@ function UpdateLight() {
 //     });
 // }
 
-// // Function to update the Sense HAT's LED matrix
+
 // function UpdateLight() {
 //     GetLight();
 // }
