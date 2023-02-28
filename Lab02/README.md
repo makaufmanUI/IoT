@@ -10,5 +10,6 @@ Using a Firebase Realtime Database, the `nodeimu` and `sense-hat-led` libraries,
 
 # Useful Links
 `nodeimu` repository: https://github.com/rupnikj/nodeimu
+
 `sense-hat-led` repository: https://github.com/aonghusonia/sense-hat-led
 
