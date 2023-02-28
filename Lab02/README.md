@@ -8,5 +8,7 @@ Using a Firebase Realtime Database, the `nodeimu` and `sense-hat-led` libraries,
       - Boolean value indicating whether the light should be updated
   3. Update the Sense HAT's LED matrix according to the boolean value
 
-## Links
-asdf
+# Useful Links
+`nodeimu` repository: https://github.com/rupnikj/nodeimu
+`sense-hat-led` repository: https://github.com/aonghusonia/sense-hat-led
+
