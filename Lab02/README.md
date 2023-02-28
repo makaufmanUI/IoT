@@ -13,3 +13,4 @@ Using a Firebase Realtime Database, the `nodeimu` and `sense-hat-led` libraries,
 
 `sense-hat-led` repository: https://github.com/aonghusonia/sense-hat-led
 
+Firebase reading and writing: https://firebase.google.com/docs/database/web/read-and-write
