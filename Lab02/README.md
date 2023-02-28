@@ -13,7 +13,7 @@ Using a Firebase Realtime Database, the `nodeimu` and `sense-hat-led` libraries,
 
 `nodeimu` readme: https://www.npmjs.com/package/@trbll/nodeimu
 
-`sense-hat-led` repository: https://github.com/aonghusonia/sense-hat-led
+`sense-hat-led` repo: https://github.com/aonghusonia/sense-hat-led
 
 `sense-hat-led` readme: https://www.npmjs.com/package/@trbll/sense-hat-led
 
