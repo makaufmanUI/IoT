@@ -1,5 +1,4 @@
 # Lab02
-<base target="_blank">
 
 Using a Firebase Realtime Database, the `nodeimu` and `sense-hat-led` libraries, and the Raspberry Pi Sense HAT:
   1. Get temperature and humidity data from the Sense HAT
@@ -15,6 +14,9 @@ Firebase Project Overview: https://console.firebase.google.com/u/9/project/iotgr
 Firebase Realtime Database: https://console.firebase.google.com/u/9/project/iotgroup15b-lab02/database
 
 # Useful Links
+
+<a href="https://github.com/rupnikj/nodeimu" target="_blank">https://github.com/rupnikj/nodeimu</a>
+
 `nodeimu` repo: https://github.com/rupnikj/nodeimu
 
 `nodeimu` readme: https://www.npmjs.com/package/@trbll/nodeimu
