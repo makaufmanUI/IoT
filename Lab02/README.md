@@ -10,9 +10,11 @@ Using a Firebase Realtime Database, the `nodeimu` and `sense-hat-led` libraries,
 
 # Useful Links
 `nodeimu` repository: https://github.com/rupnikj/nodeimu
+
 `nodeimu` readme: https://www.npmjs.com/package/@trbll/nodeimu
 
 `sense-hat-led` repository: https://github.com/aonghusonia/sense-hat-led
+
 `sense-hat-led` readme: https://www.npmjs.com/package/@trbll/sense-hat-led
 
 Firebase reading and writing: https://firebase.google.com/docs/database/web/read-and-write
