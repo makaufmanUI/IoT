@@ -15,7 +15,7 @@ Firebase Realtime Database: https://console.firebase.google.com/u/9/project/iotg
 
 # Useful Links
 
-<a href="https://github.com/rupnikj/nodeimu" target="_blank">https://github.com/rupnikj/nodeimu</a>
+[Opens in new tab](https://external.ink?to=/https://github.com/rupnikj/nodeimu)
 
 `nodeimu` repo: https://github.com/rupnikj/nodeimu
 
