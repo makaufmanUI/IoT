@@ -50,8 +50,11 @@ const database = getDatabase();
 
 // Callback to run every 5 seconds
 setInterval(function() {
-    var tempHumidity = GetTempHumidity_Sync();
+    var tempHumidity = GetTempHumidity();
     PushTempHumidity(tempHumidity[0], tempHumidity[1]);
+    console.log("> New data pushed to database...");
+    console.log("  Humidity: "    + tempHumidity[1]);
+    console.log("  Temperature: " + tempHumidity[0]);
 }, 5000);
 
 
@@ -69,10 +72,13 @@ onValue(ref(database, 'update_light'), (snapshot) => {
                         var lightG = snapshot.val();
                         get(ref(database, 'light_b')).then((snapshot) => {
                             var lightB = snapshot.val();
-                            SetPixelColor_Sync(lightRow, lightCol, lightR, lightG, lightB);
+                            SetPixelColor(lightRow, lightCol, lightR, lightG, lightB);
                             update(ref(database, 'update_light'), false);   // Set "update_light" to false
-                            var newColor = GetPixelColor_Sync(lightRow, lightCol);
-                            console.log("Light at (" + lightRow + ", " + lightCol + ") changed to (" + newColor.r + ", " + newColor.g + ", " + newColor.b + ")");
+                            var newColor = GetPixelColor(lightRow, lightCol);
+                            console.log("> Light has been updated...");
+                            console.log("  Row: " + lightRow);
+                            console.log("  Column: " + lightCol);
+                            console.log("  Color: (" + newColor.r + ", " + newColor.g + ", " + newColor.b + ")");
                         });
                     });
                 });
