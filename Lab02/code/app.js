@@ -48,7 +48,39 @@ const database = getDatabase();
 
 
 
+// Callback to run every 5 seconds
+setInterval(function() {
+    var tempHumidity = GetTempHumidity_Sync();
+    PushTempHumidity(tempHumidity[0], tempHumidity[1]);
+}, 5000);
 
+
+
+// Callback to run on "update_light" change
+onValue(ref(database, 'update_light'), (snapshot) => {
+    if (snapshot.val()) {   // If "update_light" is true
+        get(ref(database, 'light_row')).then((snapshot) => {
+            var lightRow = snapshot.val();
+            get(ref(database, 'light_col')).then((snapshot) => {
+                var lightCol = snapshot.val();
+                get(ref(database, 'light_r')).then((snapshot) => {
+                    var lightR = snapshot.val();
+                    get(ref(database, 'light_g')).then((snapshot) => {
+                        var lightG = snapshot.val();
+                        get(ref(database, 'light_b')).then((snapshot) => {
+                            var lightB = snapshot.val();
+                            SetPixelColor_Sync(lightRow, lightCol, lightR, lightG, lightB);
+                            update(ref(database, 'update_light'), false);   // Set "update_light" to false
+                            var newColor = GetPixelColor_Sync(lightRow, lightCol);
+                            console.log("Light at (" + lightRow + ", " + lightCol + ") changed to (" + newColor.r + ", " + newColor.g + ", " + newColor.b + ")");
+                            // console.log("Light at (" + lightRow + ", " + lightCol + ") changed to (" + lightR + ", " + lightG + ", " + lightB + ")");
+                        });
+                    });
+                });
+            });
+        });
+    }
+});
 
 
 
