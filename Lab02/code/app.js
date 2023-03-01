@@ -149,8 +149,8 @@ function GetTempHumidity_Async() {
 * @param {number} humidity - The humidity value to push to the database
 */
 function PushTempHumidity(temperature, humidity) {
-    set(ref(database, 'temperature'), temperature);
-    set(ref(database, 'humidity'), humidity);
+    update(ref(database, 'temperature'), temperature);
+    update(ref(database, 'humidity'), humidity);
 }
 
 
