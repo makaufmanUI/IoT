@@ -48,6 +48,7 @@ const database = getDatabase();
 
 
 
+
 // Callback to run every 5 seconds
 setInterval(function() {
     var tempHumidity = GetTempHumidity();
@@ -101,13 +102,11 @@ onValue(ref(database, 'update_light'), (snapshot) => {
 
 
 
-
-
 /**
-* Takes a reading from the Sense HAT's IMU and returns the temperature and humidity. Sync version.
+* Takes a reading from the Sense HAT's IMU and returns the temperature and humidity.
 * @returns {number[]} - An array containing the temperature and humidity, or `[0, 0]` if there was an error.
 */
-function GetTempHumidity_Sync() {
+function GetTempHumidity() {
     var data = IMU.getValueSync();
     var str = "[" + data.timestamp.toISOString() + "] ";
     if (data.temperature && data.pressure && data.humidity) {
@@ -126,43 +125,14 @@ function GetTempHumidity_Sync() {
 
 
 /**
-* Takes a reading from the Sense HAT's IMU and returns the temperature and humidity. Async version.
-* @returns {number[]} - An array containing the temperature and humidity, or `[0, 0]` if there was an error.
-*/
-function GetTempHumidity_Async() {
-    IMU.getValue((err, data) => {
-        if (err) throw err;
-        var str = "[" + data.timestamp.toISOString() + "] ";
-        if (data.temperature && data.pressure && data.humidity) {
-            str += "Temperature: " + data.temperature.toFixed(4) + "C, Humidity: " + data.humidity.toFixed(4) + "%";
-            console.log(str);
-            return [data.temperature, data.humidity];
-        } else {
-            str += "Error getting temperature and humidity data";
-            console.log(str);
-            return [0, 0];
-        }
-    });
-}
-
-
-
-
-
-/**
 * Takes temperature and humidity values and pushes them to the Firebase database.
 * @param {number} temperature - The temperature value to push to the database
 * @param {number} humidity - The humidity value to push to the database
 */
 function PushTempHumidity(temperature, humidity) {
-    update(ref(database, 'temperature'), temperature);
-    update(ref(database, 'humidity'), humidity);
+    set(ref(database, 'temperature'), temperature);
+    set(ref(database, 'humidity'), humidity);
 }
-
-
-
-
-
 
 
 
@@ -173,29 +143,9 @@ function PushTempHumidity(temperature, humidity) {
 * @param {number} pixelRow - The row number of the pixel (0-7), where 0 is on the top, and 7 is on the bottom
 * @param {number} pixelColumn - The column number of the pixel (0-7), where 0 is on the left, and 7 is on the right
 */
-function GetPixelColor_Sync(pixelRow, pixelColumn) {
+function GetPixelColor(pixelRow, pixelColumn) {
     var color = sense.getPixel(pixelRow, pixelColumn);
     return color;
-}
-
-
-
-
-
-/**
-* Takes a row and column number and returns the color of the pixel at that location. Async version.
-* @param {number} pixelRow - The row number of the pixel (0-7), where 0 is on the top, and 7 is on the bottom
-* @param {number} pixelColumn - The column number of the pixel (0-7), where 0 is on the left, and 7 is on the right
-*/
-function GetPixelColor_Async(pixelRow, pixelColumn) {
-    sense.getPixel(pixelRow, pixelColumn, (err, color) => {
-        if (err) throw err;
-        return color;
-    });
-    // return new Promise((resolve, reject) => {
-    //     var color = sense.getPixel(pixelRow, pixelColumn);
-    //     resolve(color);
-    // });
 }
 
 
@@ -210,146 +160,6 @@ function GetPixelColor_Async(pixelRow, pixelColumn) {
 * @param {number} green - The green value of the pixel (0-255)
 * @param {number} blue - The blue value of the pixel (0-255)
 */
-function SetPixelColor_Sync(pixelRow, pixelColumn, red, green, blue) {
+function SetPixelColor(pixelRow, pixelColumn, red, green, blue) {
     sense.setPixel(pixelRow, pixelColumn, red, green, blue);
 }
-
-
-
-
-
-/**
-* Takes a row and column number and sets the color of the pixel at that location. Async version.
-* @param {number} pixelRow - The row number of the pixel (0-7), where 0 is on the top, and 7 is on the bottom
-* @param {number} pixelColumn - The column number of the pixel (0-7), where 0 is on the left, and 7 is on the right
-* @param {number} red - The red value of the pixel (0-255)
-* @param {number} green - The green value of the pixel (0-255)
-* @param {number} blue - The blue value of the pixel (0-255)
-*/
-function SetPixelColor_Async(pixelRow, pixelColumn, red, green, blue) {
-    sense.setPixel(pixelRow, pixelColumn, [red, green, blue], (err) => {
-        if (err) throw err;
-        sense.getPixel(pixelRow, pixelColumn, (err, color) => {
-            if (err) throw err;
-            console.log(color);
-        })
-    });
-}
-
-
-
-
-
-/**
-* Checks the Firebase database for a light to update on the Sense HAT's LED matrix.
-* @returns {boolean} - `true` if there is a light to update, `false` if there is not.
-*/
-function LightNeedsUpdated() {
-    var light = false;
-    // Check what the value of the `update_light` boolean is in the database
-    onValue(ref(database, 'update_light'), (snapshot) => {
-        light = snapshot.val();
-    });
-    return light;
-}
-
-
-
-
-
-/**
-* Updates the Sense HAT's LED matrix if there is a light to update.
-* @returns {boolean} - `true` if a light was updated, `false` if there was no light to update.
-*/
-function UpdateLight() {
-    if (LightNeedsUpdated()) {
-        // Get the light data from the database
-        var row = 0;
-        var column = 0;
-        var r, g, b = 0;
-        // Check what the values of the `light_row`, `light_col`, `light_r`, `light_g`, and `light_b` values are in the database
-        onValue(ref(database, 'light_row'), (snapshot) => {
-            row = snapshot.val();
-        });
-        onValue(ref(database, 'light_col'), (snapshot) => {
-            column = snapshot.val();
-        });
-        onValue(ref(database, 'light_r'), (snapshot) => {
-            r = snapshot.val();
-        });
-        onValue(ref(database, 'light_g'), (snapshot) => {
-            g = snapshot.val();
-        });
-        onValue(ref(database, 'light_b'), (snapshot) => {
-            b = snapshot.val();
-        });
-        // Update the Sense HAT's LED matrix
-        sense.clear();
-        SetPixelColor_Sync(row, column, r, g, b);
-        // Update the `update_light` boolean in the database to `false`
-        update(ref(database, 'update_light'), false);
-        return true;
-    } else {
-        return false;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function GetLight() {
-//     get(ref(database, 'light')).then((snapshot) => {
-//         if (snapshot.exists()) {
-//             console.log(snapshot.val());
-//             var light = snapshot.val();
-//             var row = light.row;
-//             var col = light.col;
-//             var r = light.r;
-//             var g = light.g;
-//             var b = light.b;
-//             var update = light.update;
-//             if (update) {
-//                 sense.clear();
-//                 sense.setPixel(row, col, r, g, b);
-//                 update(ref(database, 'light/update'), false);
-//             }
-//         } else {
-//             console.log("No data available");
-//         }
-//     }).catch((error) => {
-//         console.error(error);
-//     });
-// }
-
-
-// function UpdateLight() {
-//     GetLight();
-// }
