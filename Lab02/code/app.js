@@ -73,7 +73,6 @@ onValue(ref(database, 'update_light'), (snapshot) => {
                             update(ref(database, 'update_light'), false);   // Set "update_light" to false
                             var newColor = GetPixelColor_Sync(lightRow, lightCol);
                             console.log("Light at (" + lightRow + ", " + lightCol + ") changed to (" + newColor.r + ", " + newColor.g + ", " + newColor.b + ")");
-                            // console.log("Light at (" + lightRow + ", " + lightCol + ") changed to (" + lightR + ", " + lightG + ", " + lightB + ")");
                         });
                     });
                 });
