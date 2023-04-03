@@ -3,7 +3,11 @@
 *   app.js
 *   Pi-side code for the bidirectional Pi-Arduino Bluetooth link.
 *
-*   ...
+*   Communicates with the Arduino peripheral device over Bluetooth Low Energy (BLE) using the UART service.
+*
+*   The script connects to the Arduino device by its address, 
+*   discovers the UART service and its characteristics, and establishes a two-way communication channel.
+*   The user can input text in the console, which is sent to the Arduino. When data is received from the Arduino, it is printed to the console.
 *
 *********************/
 
@@ -38,23 +42,22 @@ async function main()
     const rxChar = await uartService.getCharacteristic( RX_CHARACTERISTIC_UUID.toLowerCase() );
     
     // Register for notifications on the RX characteristic
-    await rxChar.startNotifications( );
+    await rxChar.startNotifications();
     
     // Callback for when data is received on RX characteristic
-    rxChar.on( 'valuechanged', buffer =>
-    {
-        console.log('Received: ' + buffer.toString());
+    rxChar.on('valuechanged', buffer => {
+        console.log( 'Received: ' + buffer.toString() );
     });
     
-    // Set up listener for console input.
+    // Set up a listener for console input.
     // When console input is received, write it to TX characteristic
-    const stdin = process.openStdin( );
-    stdin.addListener( 'data', async function( d )
+    const stdin = process.openStdin();
+    stdin.addListener('data', async function( d )
     {
-        let inStr = d.toString( ).trim( );
+        let inStr = d.toString().trim();
         
         // Disconnect and exit if user types 'exit'
-        if (inStr === 'exit')
+        if ( inStr === 'exit' )
         {
             console.log( 'disconnecting...' );
             await device.disconnect();
@@ -67,20 +70,17 @@ async function main()
         inStr = (inStr.length > 20) ? inStr.slice(0,20) : inStr;
         
         // Attempt to write/send value to TX characteristic
-        await txChar.writeValue(Buffer.from(inStr)).then(() =>
-        {
-            console.log('Sent: ' + inStr);
+        await txChar.writeValue( Buffer.from(inStr) ).then(() => {
+            console.log( 'Sent: ' + inStr );
         });
     });
 }
 
 
 
-main().then((ret) => 
-{
+main().then((ret) => {
     if (ret) console.log( ret );
-}).catch((err) =>
-{
+}).catch((err) => {
     if (err) console.error( err );
 });
 
