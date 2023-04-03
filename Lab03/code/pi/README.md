@@ -11,5 +11,7 @@
 5. Messages that the app should print (at a minimum):
 
   a) The temperature whenever it receives it from the Arduino.
+  
   b) The humidity after every reading at rate specified by `Interval`.
+  
   c) The new value of `Interval` whenever it changes on Firebase.
