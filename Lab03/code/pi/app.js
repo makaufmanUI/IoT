@@ -10,17 +10,6 @@
 *   The user can input text in the console, which is sent to the Arduino. When data is received from the Arduino, it is printed to the console.
 *
 *
-*   Lab requirements (building off of Lab02):
-*       1. Add the ability to harvest the temperature data from the Arduino via Bluetooth LE.
-*       2. Add the ability to control the interval at which the temperature and humidity data are harvested.
-*          In other words, be able to modify the value of the `Interval` key in the database (valid values are 1-10 *seconds*).
-*          The `Interval` value will control the sampling rate of the simulated environmental sensor service on the Arduino and the humidity sensor on the Pi.
-*       3. Modify the example Arduino sketch so that it can vary the sampling interval in the valid range of 1-10 seconds.
-*       4. Upon the value of `Interval` changing in the Firebase database, the updated value should be pushed
-*          to the Node app on the Pi and then be sent wirelessly to the Arduino **using the Bluetooth LE Nordic UART service**.
-*       5. The JavaScript/Node app on the Pi should also change the sampling interval of the humidity to match the new value of the `Invertal` entry.
-*          This means that the Arduino sketch (and JavaScript/Node app) will need to use both the Bluetooth LE Nordic UART and Environmental Sensing service profiles.
-*
 *   Specific requirements of the JavaScript/Node app:
 *       1. Must be able to update the sense-hat’s light array like in Lab 2.
 *       2. Add the value `Interval` to the Firebase database (valid values are 1-10 *seconds*).
@@ -36,17 +25,6 @@
 *              a) The temperature whenever it receives it from the Arduino.
 *              b) The humidity after every reading at rate specified by `Interval`.
 *              c) The new value of `Interval` whenever it changes on Firebase.
-*
-*   Specific requirements of the Arduino sketch:
-*       1. Read the temperature from the HTS221 sensor used in Lab 1 and transmit it to the Pi via
-*          the Temperature characteristic of the Environmental Sensing service at the Interval specified by the Pi.
-*          DO NOT use the UART service to transmit temperature data.
-*       2. Receive the sampling interval from the Pi via the Bluetooth LE Nordic UART
-*          service profile and change the sampling interval of the temperature sensor accordingly.
-*       3. Print the following messages to the serial monitor (at a minimum):
-*              a) The temperature after every Interval’s reading.
-*              b) The new Interval every time it is received from the Pi.
-*                 This message should be printed within one second of the Pi sending the new interval.
 *
 *********************/
 
