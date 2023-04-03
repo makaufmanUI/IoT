@@ -6,6 +6,6 @@
 
 3. Print the following messages to the serial monitor (at a minimum):
 
-    a) The temperature after every Interval’s reading.
+        a) The temperature after every Interval’s reading.
   
-    b) The new Interval every time it is received from the Pi. This message should be printed within one second of the Pi sending the new interval.
+        b) The new Interval every time it is received from the Pi. This message should be printed within one second of the Pi sending the new interval.
