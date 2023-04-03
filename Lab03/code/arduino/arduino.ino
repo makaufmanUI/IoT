@@ -1,4 +1,4 @@
-/******
+/********************
 *
 *   arduino.ino
 *   Arduino-side code for the bidirectional Pi-Arduino Bluetooth link.
@@ -19,7 +19,7 @@
 *   For the purposes of this lab, the Arduino board acts as a peripheral device, advertising a UART service over BLE,
 *   and the Raspberry Pi acts as a central device, allowing the exchange of data between the two using the defined characteristics of the UART service.
 *
-*******/
+*********************/
 
 
 #include <ArduinoBLE.h>
