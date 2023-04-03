@@ -53,6 +53,12 @@ void setup()
     Serial.begin(9600);
     while (!Serial) { }
     
+    // Initialize HTS221 sensor
+    if ( !HTS.begin() ) {
+        Serial.println("Failed to initialize HTS221 sensor!");
+        while(1);
+    }
+    
     // Initialize the BLE module
     if ( !BLE.begin() )
     {
@@ -115,6 +121,31 @@ void loop()
         Serial.println( central.address() );
     }
 }
+
+
+
+
+
+
+
+/***
+*
+*   Takes a temperature measurement from the HTS221 sensor.
+*   @return float - The latest temperature reading or -1 if there was an error
+*
+****/
+float GetTemperature()
+{
+    float temp = HTS.readTemperature();
+    if (temp) {
+        return temp;
+    } else {
+        return -1;
+    }
+}
+
+
+
 
 
 
