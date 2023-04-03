@@ -36,6 +36,7 @@
 
 #include <ArduinoBLE.h>
 #include "TimeoutTimer.h"
+#include <Arduino_HTS221.h>
 #define BUFSIZE 20
 
 
