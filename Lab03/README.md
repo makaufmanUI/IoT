@@ -1,6 +1,8 @@
 # Lab03
 Gaining experience using Bluetooth Low Energy (BLE) with the Arduino and Raspberry Pi, using the `ArduinoBLE` and `node-ble` libraries, respectively.
 
+<br>
+
 ## Lab requirements (building off of Lab02):
 
 1. Add the ability to harvest the temperature data from the Arduino via Bluetooth LE. 
