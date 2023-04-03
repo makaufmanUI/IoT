@@ -7,7 +7,7 @@ Gaining experience using Bluetooth Low Energy (BLE) with the Arduino and Raspber
 
 1. Add the ability to harvest the temperature data from the Arduino via Bluetooth LE. 
 
-2. Add the ability to control the interval at which the temperature and humidity data are harvested. In other words, be able to modify the value of the `Interval` key in the database (valid values are 1-10 *seconds*). The `Interval` value will control the sampling rate of the simulated environmental sensor service on the Arduino and the humidity sensor on the Pi. 
+2. Add the ability to control the interval at which the temperature and humidity data are harvested. In other words, be able to modify the value of the `Interval` key in the database (valid values are 1-10 **seconds**). The `Interval` value will control the sampling rate of the simulated environmental sensor service on the Arduino and the humidity sensor on the Pi. 
 
 3. Modify the example Arduino sketch so that it can vary the sampling interval in the valid range of 1-10 seconds.
 
