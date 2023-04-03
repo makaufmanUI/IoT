@@ -9,6 +9,8 @@ Extension of Lab 1 and Lab 2 by using BLE to communicate temperature data from t
 
 `node-ble` repo: https://github.com/chrvadala/node-ble
 
+`sense-hat-led` repo: https://github.com/aonghusonia/sense-hat-led
+
 `ArduinoBLE` reference: https://www.arduino.cc/reference/en/libraries/arduinoble/
 
 Firebase reading and writing: https://firebase.google.com/docs/database/web/read-and-write
