@@ -28,22 +28,17 @@ var sense = require("@trbll/sense-hat-led");
 const { getDatabase, ref, onValue, set, update, get } = require("firebase/database");
 
 const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: "",
-  measurementId: ""
+    apiKey: "",
+    authDomain: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: "",
+    measurementId: ""
 };
 firebase.initializeApp(firebaseConfig);
 
 const database = getDatabase();
-
-
-
-
-
 
 
 
@@ -61,37 +56,27 @@ setInterval(function() {
 
 
 // Callback to run on "update_light" change
-onValue(ref(database, 'update_light'), (snapshot) => {
-    if (snapshot.val()) {   // If "update_light" is true
-        get(ref(database, 'light_row')).then((snapshot) => {
-            var lightRow = snapshot.val();
-            get(ref(database, 'light_col')).then((snapshot) => {
-                var lightCol = snapshot.val();
-                get(ref(database, 'light_r')).then((snapshot) => {
-                    var lightR = snapshot.val();
-                    get(ref(database, 'light_g')).then((snapshot) => {
-                        var lightG = snapshot.val();
-                        get(ref(database, 'light_b')).then((snapshot) => {
-                            var lightB = snapshot.val();
-                            SetPixelColor(lightRow, lightCol, lightR, lightG, lightB);
-                            update(ref(database, 'update_light'), false);   // Set "update_light" to false
-                            var newColor = GetPixelColor(lightRow, lightCol);
-                            console.log("> Light has been updated...");
-                            console.log("  Row: " + lightRow);
-                            console.log("  Column: " + lightCol);
-                            console.log("  Color: (" + newColor.r + ", " + newColor.g + ", " + newColor.b + ")");
-                        });
-                    });
-                });
-            });
-        });
+onValue(ref(database, 'update_light'), (snapshot) => 
+{
+    // Get data from the database
+    const data = snapshot.val();
+    
+    if ( data )
+    {
+        // Update the appropriate light with the appropriate color
+        SetPixelColor( data.light_row, data.light_col, data.light_r, data.light_g, data.light_b );
+        
+        // Set "update_light" to false
+        update( ref(database,'update_light'), false );
+        
+        // Check that the pixel color has been set correctly
+        var newColor = GetPixelColor( data.light_row, data.light_col );
+        console.log( "> Light has been updated..." );
+        console.log( "  Row: " + data.light_row );
+        console.log( "  Column: " + data.light_col );
+        console.log( "  Color: (" + newColor.r + ", " + newColor.g + ", " + newColor.b + ")" );
     }
 });
-
-
-
-
-
 
 
 
