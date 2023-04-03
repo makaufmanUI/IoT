@@ -1,5 +1,5 @@
 # Lab03
-Gaining experience using Bluetooth Low Energy (BLE) with the Arduino and Raspberry Pi, using the `ArduinoBLE` and `node-ble` libraries, respectively.
+Gaining experience using Bluetooth Low Energy (BLE) with the Arduino and Raspberry Pi, using the `ArduinoBLE` and `node-ble` libraries.
 
 <br>
 
@@ -15,6 +15,7 @@ Gaining experience using Bluetooth Low Energy (BLE) with the Arduino and Raspber
 
 5. The JavaScript/Node app on the Pi should also change the sampling interval of the humidity to match the new value of the `Invertal` entry. This means that the Arduino sketch (and JavaScript/Node app) will **need to use both the Bluetooth LE Nordic UART and Environmental Sensing service profiles**.
 
+<br>
 
 # Useful Links
 `nodeimu` repo: https://github.com/rupnikj/nodeimu
