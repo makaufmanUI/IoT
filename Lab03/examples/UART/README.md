@@ -1,2 +1,2 @@
-# UART Example
+# UART (Universal Asynchronous Receiver-Transmitter) Example
 
