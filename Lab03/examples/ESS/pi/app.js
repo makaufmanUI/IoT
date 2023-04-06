@@ -1,6 +1,6 @@
 /*
 *
-*   ./example/pi/app.js
+*   ./examples/ESS/pi/app.js
 *
 *   Reworked code from the "2_ESS-Starting.zip" example.
 *
