@@ -1,4 +1,4 @@
-# UART (Universal Asynchronous Receiver-Transmitter) Example
+# UART Example
 
 Unmodified code from the examples provided on ICON (minus some formatting changes).
 
