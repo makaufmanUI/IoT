@@ -1,6 +1,6 @@
 /*
 *
-*   ./example/arduino/main.ino
+*   ./examples/ESS/arduino/arduino.ino
 *
 *   Reworked code from the "2_ESS-Starting.zip" example.
 *
