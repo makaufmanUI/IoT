@@ -25,8 +25,8 @@ const RX_CHARACTERISTIC_UUID = '6E400003-B5A3-F393-E0A9-E50E24DCCA9E';
 
 
 // Define ESS GATT service profile UUIDs
-const EES_SERVICE_UUID       = '0000181a-0000-1000-8000-00805f9b34fb';
-const TEMP_CHAR_UUID         = '00002a6e-0000-1000-8000-00805f9b34fb';
+const EES_SERVICE_UUID         = '0000181a-0000-1000-8000-00805f9b34fb';
+const TEMP_CHARACTERISTIC_UUID = '00002a6e-0000-1000-8000-00805f9b34fb';
 
 
 
@@ -48,25 +48,43 @@ async function main()
     // Get references to the desired UART service and its characteristics
     const gattServer = await device.gatt();
     const uartService = await gattServer.getPrimaryService(UART_SERVICE_UUID.toLowerCase());
-    const txChar = await uartService.getCharacteristic(TX_CHARACTERISTIC_UUID.toLowerCase());
-    const rxChar = await uartService.getCharacteristic(RX_CHARACTERISTIC_UUID.toLowerCase());
+    const txCharacteristic = await uartService.getCharacteristic(TX_CHARACTERISTIC_UUID.toLowerCase());
+    const rxCharacteristic = await uartService.getCharacteristic(RX_CHARACTERISTIC_UUID.toLowerCase());
+    
+    
+    
     
     // Get references to the desired ESS service and its temparature characteristic
-    // TODO
+    const essService = await gattServer.getPrimaryService(EES_SERVICE_UUID.toLowerCase());
+    const tempCharacteristic = await essService.getCharacteristic(TEMP_CHARACTERISTIC_UUID.toLowerCase());
+    
+    
+    
     
     // Register for notifications on the RX characteristic
-    await rxChar.startNotifications();
+    await rxCharacteristic.startNotifications();
     
     // Callback for when data is received on RX characteristic
-    rxChar.on('valuechanged', buffer => {
+    rxCharacteristic.on('valuechanged', buffer => {
         console.log('>> Received: ' + buffer.toString());
     });
     
+    
+    
+    
     // Register for notifications on the temperature characteristic
-    // TODO
+    await tempCharacteristic.startNotifications();
     
     // Callback for when data is received on the temp characteristic
-    // TODO
+    tempCharacteristic.on('valuechanged', buffer => {
+        // The temperature value is represented as a 16-bit (2-byte) number
+        let lsb = buffer[0];    // Least Significant Byte of the temperature value (smallest place value, rightmost byte)
+        let msb = buffer[1];    // Most Significant Byte of the temperature value (largest place value, leftmost byte)
+        console.log('>> Received: ' + buffer.toString());
+    });
+    
+    
+    
     
     // Set up listener for console input
     // When console input is received, write it to TX characteristic
@@ -89,7 +107,7 @@ async function main()
         inStr = (inStr.length > 20) ? inStr.slice(0,20) : inStr;
         
         // Attempt to write/send value to TX characteristic
-        await txChar.writeValue( Buffer.from(inStr) ).then(() => {
+        await txCharacteristic.writeValue( Buffer.from(inStr) ).then(() => {
             console.log('>> Sent: ' + inStr);
         });
     });
