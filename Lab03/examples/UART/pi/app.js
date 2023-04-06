@@ -4,13 +4,6 @@
 *
 *   Reworked code from the "1_UART-Example.zip" example.
 *
-*
-*   Added:
-*       - 
-*
-*   Todo:
-*       - 
-*
 */
 
 
