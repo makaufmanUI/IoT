@@ -40,6 +40,10 @@
 #define BUFSIZE 20
 
 
+// Global Interval timer
+int firebaseInterval = 10;
+
+
 // Simulate UART connection using the ArduinoBLE library
 BLEService uartService("6E400001-B5A3-F393-E0A9-E50E24DCCA9E");
 BLEStringCharacteristic txChar("6E400002-B5A3-F393-E0A9-E50E24DCCA9E", BLEWrite, 20);
@@ -121,12 +125,26 @@ void loop()
                 rxChar.writeValue(inputs);
             }
             
+            
+            
             // Receive data from the central device (if written is true) and print it to the Serial Monitor
             if (txChar.written())
             {
+                // Check if it's the Interval value from the central device
+//                 if (txChar.value() == ...)
+//                 {
+//                     firebaseInterval = txChar.value();                  // Update global delay timer
+//                     Serial.print(">> [Recv] New `Interval` value: ");   // Print new Interval value to console
+//                     Serial.println(txChar.value());
+//                 } else {
+//                     Serial.print(">> [Recv] ");
+//                     Serial.println(txChar.value());
+//                 }
                 Serial.print(">> [Recv] ");
                 Serial.println(txChar.value());
             }
+            
+            
             
             /* Emit temperature per ESS's tempChar
              * Per the characteristic spec, temp should be in Celsius,
@@ -147,7 +165,7 @@ void loop()
             
             // TODO: Should get this delay value from the Pi via UART,
             // which itself should come from the Interval value in the Firebase database
-            delay(1000);
+            delay(firebaseInterval*1000);
         }
         
         // Print the central device's BT address upon disconnect
