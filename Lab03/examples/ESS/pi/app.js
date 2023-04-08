@@ -6,11 +6,11 @@
 *
 *
 *   Added:
-*       - 
+*       - Got references to the desired ESS service and its temparature characteristic
+*       - Set up a callback for when data is received on the temperature characteristic
 *
 *   Todo:
-*       - Get references to the desired ESS service and its temparature characteristic
-*       - Set up a callback for when data is received on the temperature characteristic
+*
 */
 
 
@@ -77,10 +77,13 @@ async function main()
     
     // Callback for when data is received on the temp characteristic
     tempCharacteristic.on('valuechanged', buffer => {
+        console.log('>> Received (buffer): ' + buffer.toString());
         // The temperature value is represented as a 16-bit (2-byte) number
         let lsb = buffer[0];    // Least Significant Byte of the temperature value (smallest place value, rightmost byte)
         let msb = buffer[1];    // Most Significant Byte of the temperature value (largest place value, leftmost byte)
-        console.log('>> Received: ' + buffer.toString());
+        let shortTemp = (msb << 8) | lsb;   // Combine the two bytes into a 16-bit short integer
+        let temp = shortTemp / 100;         // Divide by 100 to get the original temperature value in Celsius
+        console.log('>> Received Temperature: ' + temp.toFixed(2) + ' °C');
     });
     
     
