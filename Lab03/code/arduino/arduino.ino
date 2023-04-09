@@ -131,15 +131,16 @@ void loop()
             if (txChar.written())
             {
                 // Check if it's the Interval value from the central device
-//                 if (txChar.value() == ...)
-//                 {
-//                     firebaseInterval = txChar.value();                  // Update global delay timer
-//                     Serial.print(">> [Recv] New `Interval` value: ");   // Print new Interval value to console
-//                     Serial.println(txChar.value());
-//                 } else {
-//                     Serial.print(">> [Recv] ");
-//                     Serial.println(txChar.value());
-//                 }
+                if (txChar.value() == ...)
+                {
+                    Serial.print(">> [Recv] New `Interval` value: ");   // Print new Interval value to console
+                    Serial.println(txChar.value());
+                    firebaseInterval = txChar.value();                  // Update global delay timer
+                    Serial.println(">> Updated temperature sensor sampling rate.");
+                } else {
+                    Serial.print(">> [Recv] ");
+                    Serial.println(txChar.value());
+                }
                 Serial.print(">> [Recv] ");
                 Serial.println(txChar.value());
             }
