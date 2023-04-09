@@ -63,6 +63,11 @@ const TEMP_CHARACTERISTIC_UUID = '00002a6e-0000-1000-8000-00805f9b34fb';
 
 
 
+// Global Interval timer for humidity sensor sampling rate
+var firebaseInterval = 10;
+
+
+
 
 async function main()
 {
@@ -155,6 +160,9 @@ onValue(ref(database, 'Interval'), (snapshot) =>
 {
     // Get the value of "Interval"
     var interval = snapshot.val();
+    
+    // Update the global sample rate interval
+    firebaseInterval = interval;
     
     // Forward this value to to the Arduino using the Bluetooth LE Nordic UART service
     txCharacteristic.writeValue(interval);
