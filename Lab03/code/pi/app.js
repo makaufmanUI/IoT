@@ -67,6 +67,11 @@ const TEMP_CHARACTERISTIC_UUID = '00002a6e-0000-1000-8000-00805f9b34fb';
 var firebaseInterval = 10;
 
 
+// Set interval at which humidity data is read and pushed to database
+var setInt = setInterval(GetHumidity, firebaseInterval*1000);
+
+
+
 
 
 async function main()
@@ -93,27 +98,26 @@ async function main()
     const essService = await gattServer.getPrimaryService(EES_SERVICE_UUID.toLowerCase());
     const tempCharacteristic = await essService.getCharacteristic(TEMP_CHARACTERISTIC_UUID.toLowerCase());
     
-    // Register for notifications on the RX characteristic
-    await rxCharacteristic.startNotifications();
-    
-    // Callback for when data is received on RX characteristic
-    rxCharacteristic.on('valuechanged', buffer => {
-        console.log('>> Received: ' + buffer.toString());
-    });
-    
     // Register for notifications on the temperature characteristic
     await tempCharacteristic.startNotifications();
     
     // Callback for when data is received on the temp characteristic
     tempCharacteristic.on('valuechanged', buffer => {
-        console.log('>> Received (buffer): ' + buffer.toString());
-        // The temperature value is represented as a 16-bit (2-byte) number
-        let lsb = buffer[0];    // Least Significant Byte of the temperature value (smallest place value, rightmost byte)
-        let msb = buffer[1];    // Most Significant Byte of the temperature value (largest place value, leftmost byte)
-        let shortTemp = (msb << 8) | lsb;   // Combine the two bytes into a 16-bit short integer
-        var temp = shortTemp / 100;         // Divide by 100 to get the original temperature value in Celsius
-        console.log('>> Received Temperature: ' + temp.toFixed(2) + ' °C');
+        const tempNum = buffer.readUInt16LE() / 100;    // Read in the temperature and divide to restore precision
+        console.log('>> Received Temperature: ' + temp.toFixed(2) + ' °C'); 
+        set(ref(database, 'temperature'), tempNum)      // Push temperature to database
     });
+    
+    // Callback for when `Interval` changes in the database
+    onValue(ref(database, 'Interval'), (snapshot) => 
+    {
+        var interval = snapshot.val();
+        firebaseInterval = interval;    // Update global sampling rate
+        clearInterval(setInt);          // Clear the humidity sampling/updating interval
+        setInt = setInterval(GetHumidity, firebaseInterval*1000)    // Set new interval
+        let writeVal = "interval : " + interval.toString().trim();
+        txCharacteristic.writeValue(Buffer.from(writeVal))  // Send to Arduino via UART
+    }
     
     // Set up listener for console input
     // When console input is received, write it to TX characteristic
@@ -155,27 +159,6 @@ main().then((ret) => {
 
 
 
-// Callback to run on "Interval" change
-onValue(ref(database, 'Interval'), (snapshot) => 
-{
-    // Get the value of "Interval"
-    var interval = snapshot.val();
-    
-    // Update the global sample rate interval
-    firebaseInterval = interval;
-    
-    // Forward this value to to the Arduino using the Bluetooth LE Nordic UART service
-    txCharacteristic.writeValue(interval);
-});
-
-
-
-
-
-
-
-
-
 /**
 * Takes a reading from the Sense HAT's IMU and returns the humidity.
 * @returns {number} - The current humidity, or `0` if there was an error
@@ -184,8 +167,9 @@ function GetHumidity() {
     var data = IMU.getValueSync();
     var str = ">> [" + data.timestamp.toISOString() + "] ";
     if (data.humidity) {
-        str += "Humidity: " + data.humidity.toFixed(4) + "%.";
+        str += "Humidity: " + data.humidity.toFixed(2) + "%.";
         console.log(str);
+        set(ref(database, 'humidity'), data.humidity);  // Push humidity reading to database
         return data.humidity;
     } else {
         str += "Error getting humidity reading.";
