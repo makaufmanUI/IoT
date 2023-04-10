@@ -6,19 +6,6 @@
 *   Uses the ArduinoBLE library to simulate a UART connection using the Nordic UART service profile.
 *   More: https://learn.adafruit.com/introducing-adafruit-ble-bluetooth-low-energy-friend/uart-service
 *
-*   Definition of terms:
-*       Central device  -   A device that initiates the connection and controls the data exchange with the peripheral device.
-*                           It scans for nearby peripherals, connects to them, and can read or write data to their characteristics.
-*                           The central device can manage multiple connections with different peripheral devices simultaneously.
-*
-*       Peripheral device - A (usually) low-power, resource-constrained devicelike a sensor, an IoT device,
-*                           or a microcontroller (e.g., Arduino) that advertises its presence and services to nearby central devices.
-*                           It provides data or accepts commands from the central device through the use of services and characteristics.
-*                           In a BLE connection, the peripheral device can only be connected to one central device at a time.
-*                           
-*   For the purposes of this lab, the Arduino board acts as a peripheral device, advertising a UART service over BLE,
-*   and the Raspberry Pi acts as a central device, allowing the exchange of data between the two using the defined characteristics of the UART service.
-*
 *
 *   Specific requirements of the Arduino sketch:
 *       1. Read the temperature from the HTS221 sensor used in Lab 1 and transmit it to the Pi via
