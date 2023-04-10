@@ -3,12 +3,6 @@
 *   app.js
 *   Pi-side code for the bidirectional Pi-Arduino Bluetooth link.
 *
-*   Communicates with the Arduino peripheral device over Bluetooth Low Energy (BLE) using the UART service.
-*
-*   The script connects to the Arduino device by its address, 
-*   discovers the UART service and its characteristics, and establishes a two-way communication channel.
-*   The user can input text in the console, which is sent to the Arduino. When data is received from the Arduino, it is printed to the console.
-*
 *
 *   Specific requirements of the JavaScript/Node app:
 *       1. Must be able to update the sense-hat’s light array like in Lab 2.
