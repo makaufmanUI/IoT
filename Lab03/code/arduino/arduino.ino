@@ -3,9 +3,6 @@
 *   arduino.ino
 *   Arduino-side code for the bidirectional Pi-Arduino Bluetooth link.
 *
-*   Uses the ArduinoBLE library to simulate a UART connection using the Nordic UART service profile.
-*   More: https://learn.adafruit.com/introducing-adafruit-ble-bluetooth-low-energy-friend/uart-service
-*
 *
 *   Specific requirements of the Arduino sketch:
 *       1. Read the temperature from the HTS221 sensor used in Lab 1 and transmit it to the Pi via
