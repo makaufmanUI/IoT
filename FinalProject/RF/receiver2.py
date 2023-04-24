@@ -44,6 +44,15 @@ GPIO.setup(WEST_PIN,   GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 GPIO.setup(COMMON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 
+# Define globals
+signals = {
+    "NORTH": {},
+    "SOUTH": {},
+    "EAST":  {},
+    "WEST":  {},
+}
+
+
 
 def rx_callback(channel: int) -> None:
     """
@@ -56,26 +65,34 @@ def rx_callback(channel: int) -> None:
     if channel == NORTH_PIN:
         if GPIO.input(NORTH_PIN):
             Print("North HIGH")
-#         else:
-#             Print("North LOW")
+            signals["NORTH"][datetime.now()] = 1
+        else:
+            Print("North LOW")
+            signals["NORTH"][datetime.now()] = 0
     
     elif channel == SOUTH_PIN:
         if GPIO.input(SOUTH_PIN):
             Print("South HIGH")
-#         else:
-#             Print("South LOW")
+            signals["SOUTH"][datetime.now()] = 1
+        else:
+            Print("South LOW")
+            signals["SOUTH"][datetime.now()] = 0
     
     elif channel == EAST_PIN:
         if GPIO.input(EAST_PIN):
             Print("East HIGH")
-#         else:
-#             Print("East LOW")
+            signals["EAST"][datetime.now()] = 1
+        else:
+            Print("East LOW")
+            signals["EAST"][datetime.now()] = 0
 
     elif channel == WEST_PIN:
         if GPIO.input(WEST_PIN):
             Print("West HIGH")
-#         else:
-#             Print("West LOW")
+            signals["WEST"][datetime.now()] = 1
+        else:
+            Print("West LOW")
+            signals["WEST"][datetime.now()] = 0
 
 #     elif channel == COMMON_PIN:
 #         if GPIO.input(COMMON_PIN):
@@ -106,4 +123,15 @@ try:
 except KeyboardInterrupt:
     Print("Exiting...")
     GPIO.cleanup()      # Clean up the GPIO pins
-    exit()              # Exit the program
+    
+    # Plot the signals
+    plt.plot( list(signals["NORTH"].keys()), list(signals["NORTH"].values()), label="NORTH" )
+    plt.plot( list(signals["SOUTH"].keys()), list(signals["SOUTH"].values()), label="SOUTH" )
+    plt.plot( list(signals["EAST"].keys()) , list(signals["EAST"].values()) , label="EAST"  )
+    plt.plot( list(signals["WEST"].keys()) , list(signals["WEST"].values()) , label="WEST"  )
+    plt.legend(loc="best")
+    plt.xlabel("Time")
+    plt.ylabel("Signal")
+    plt.show()
+    
+#     exit()              # Exit the program
