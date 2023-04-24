@@ -4,7 +4,7 @@
 ## Transmitter
 
 Circuit layout
-![](https://github.com/makaufmanUI/IoT/blob/main/FinalProject/RF/transmitter_circuit.png)
+![](https://github.com/makaufmanUI/IoT/blob/main/FinalProject/RF/images/transmitter_circuit.png)
 
 
 ## Receiver
