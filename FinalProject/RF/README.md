@@ -10,3 +10,4 @@ Circuit layout
 ## Receiver
 
 Circuit layout
+![](https://github.com/makaufmanUI/IoT/blob/main/FinalProject/RF/images/receiver_circuit.png)
