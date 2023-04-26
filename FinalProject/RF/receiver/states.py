@@ -17,7 +17,7 @@ class States:
     """
     An object representing the states of the North, South, East, and West pins of the receiver.
     """
-    def __init__(self, north: int, south: int, east: int, west: int) -> None:
+    def __init__(self, north: int, south: int, east: int, west: int):
         self._north = north
         self._south = south
         self._east  = east
