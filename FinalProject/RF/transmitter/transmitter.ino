@@ -27,8 +27,8 @@ unsigned long transmitInterval = 1000;  // Interval between transmissions, in mi
 
 
 // Function prototypes
-String print(String str);
-String println(String str);
+void print(String str);
+void println(String str);
 void end_transmission(unsigned int pin);
 void start_transmission(unsigned int pin);
 
@@ -113,7 +113,7 @@ void loop()
 * Prints a string to the serial monitor, prefaced with the current time since program start.
 *    @param str - The string to be printed
 **/
-String print(String str)
+void print(String str)
 {
     Serial.print("[");
     Serial.print(millis()/1000.);
@@ -127,7 +127,7 @@ String print(String str)
 * Prints a string to the serial monitor, prefaced with the current time since program start, followed by a newline.
 *    @param str - The string to be printed
 **/
-String println(String str)
+void println(String str)
 {
     Serial.print("[");
     Serial.print(millis()/1000.);
