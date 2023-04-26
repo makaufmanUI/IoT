@@ -9,8 +9,6 @@ Continuously checks for an incoming signal from the transmitter (TX118SA-4),
 and makes the distinction between channels that the incoming signal was received on.
 """
 
+from states import *
 from time import sleep
 import RPi.GPIO as GPIO
-from typing import Callable
-from datetime import datetime
-import matplotlib.pyplot as plt
