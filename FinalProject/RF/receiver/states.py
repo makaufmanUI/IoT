@@ -134,13 +134,13 @@ class States:
         if pin == None:
             plt.title("Signal History", fontsize=18, pad=20)
             for pin in self._history:
-                plt.plot(times, list(states.get_history(pin).values()), label=pin)
+                plt.plot(times, list(self.get_history(pin).values()), label=pin)
             plt.legend(loc="upper center", ncol=4, fontsize=10)
         else:
             if isinstance(pin, int):
                 pin = {23: "north", 24: "south", 25: "east", 12: "west"}[pin]
             plt.title(f"{pin.title()} Signal History", fontsize=18, pad=20)
-            plt.plot(times, list(states.get_history(pin).values()), color={"north": "#1f77b4", "south": "#ff7f0e", "east": "#2ca02c", "west": "#d62728"}[pin])
+            plt.plot(times, list(self.get_history(pin).values()), color={"north": "#1f77b4", "south": "#ff7f0e", "east": "#2ca02c", "west": "#d62728"}[pin])
         plt.show()
         plt.close()
     
@@ -157,7 +157,7 @@ class States:
         for pin, ax in zip(self._history, axes):
             ax.set_yticks([0, 1])
             ax.set_ylim(-0.1, 1.1)
-            ax.plot(times, list(states.get_history(pin).values()), label=pin, color={"north": "#1f77b4", "south": "#ff7f0e", "east": "#2ca02c", "west": "#d62728"}[pin])
+            ax.plot(times, list(self.get_history(pin).values()), label=pin, color={"north": "#1f77b4", "south": "#ff7f0e", "east": "#2ca02c", "west": "#d62728"}[pin])
             ax.set_title(pin.title())
             if pin == "west":
                 ax.set_xlabel("Time", fontsize=14, fontstyle='italic', labelpad=15)
