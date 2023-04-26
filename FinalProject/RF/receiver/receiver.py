@@ -77,7 +77,7 @@ def rx_callback(channel: int) -> None:
 try:
     Print("Starting...")
     for pin in [NORTH_PIN,SOUTH_PIN,EAST_PIN,WEST_PIN,COMMON_PIN]:
-        GPIO.add_event_detect(pin,  GPIO.BOTH, callback=rx_callback, bouncetime=20)
+        GPIO.add_event_detect(pin, GPIO.BOTH, callback=rx_callback, bouncetime=20)
     while True:
         states.extend_history()
         sleep(0.05)
