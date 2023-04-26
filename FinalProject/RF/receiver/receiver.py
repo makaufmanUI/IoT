@@ -56,7 +56,8 @@ def rx_callback(channel: int) -> None:
         `channel` : The channel that the signal was received on
     """
     pin = {NORTH_PIN: "North", SOUTH_PIN: "South", EAST_PIN: "East", WEST_PIN: "West", COMMON_PIN: "Common"}[channel]
-    Print(f"{pin} HIGH") if GPIO.input(channel) else Print(f"{pin} LOW")
+    if pin != "Common":
+        Print(f"{pin} HIGH") if GPIO.input(channel) else Print(f"{pin} LOW")
     
     if pin == "North":
         states.north = GPIO.input(channel)
