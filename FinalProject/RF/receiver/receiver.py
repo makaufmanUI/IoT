@@ -76,11 +76,8 @@ def rx_callback(channel: int) -> None:
 # Loop and wait for keyboard interrupt
 try:
     Print("Starting...")
-    GPIO.add_event_detect(NORTH_PIN,  GPIO.BOTH, callback=rx_callback, bouncetime=20)
-    GPIO.add_event_detect(SOUTH_PIN,  GPIO.BOTH, callback=rx_callback, bouncetime=20)
-    GPIO.add_event_detect(EAST_PIN,   GPIO.BOTH, callback=rx_callback, bouncetime=20)
-    GPIO.add_event_detect(WEST_PIN,   GPIO.BOTH, callback=rx_callback, bouncetime=20)
-    GPIO.add_event_detect(COMMON_PIN, GPIO.BOTH, callback=rx_callback, bouncetime=20)
+    for pin in [NORTH_PIN,SOUTH_PIN,EAST_PIN,WEST_PIN,COMMON_PIN]:
+        GPIO.add_event_detect(pin,  GPIO.BOTH, callback=rx_callback, bouncetime=20)
     while True:
         states.extend_history()
         sleep(0.05)
