@@ -77,9 +77,9 @@ def rx_callback(channel: int) -> None:
     
     if pin == "Common":
         if GPIO.input(channel):
-            print("COMMON high")
+            Print("COMMON high")
         else:
-            print("COMMON low")
+            Print("COMMON low")
 
         
 
