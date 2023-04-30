@@ -9,7 +9,7 @@ Continuously checks for an incoming signal from the transmitter (TX118SA-4),
 and makes the distinction between channels that the incoming signal was received on.
 """
 
-from states import *
+# from states import *
 from time import sleep
 import RPi.GPIO as GPIO
 
@@ -46,7 +46,7 @@ GPIO.setup(COMMON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 
 # Initialize States object
-states = States(0, 0, 0, 0)
+# states = States(0, 0, 0, 0)
 
 
 def rx_callback(channel: int) -> None:
@@ -62,13 +62,17 @@ def rx_callback(channel: int) -> None:
         Print(f"{pin} HIGH") if GPIO.input(channel) else Print(f"{pin} LOW")
     
     if pin == "North":
-        states.north = GPIO.input(channel)
+        pass
+        # states.north = GPIO.input(channel)
     elif pin == "South":
-        states.south = GPIO.input(channel)
+        pass
+        # states.south = GPIO.input(channel)
     elif pin == "West":
-        states.west = GPIO.input(channel)
+        pass
+        # states.west = GPIO.input(channel)
     elif pin == "East":
-        states.east = GPIO.input(channel)
+        pass
+        # states.east = GPIO.input(channel)
     elif pin == "Common":
         pass
 
@@ -81,8 +85,8 @@ try:
     for pin in [NORTH_PIN,SOUTH_PIN,EAST_PIN,WEST_PIN,COMMON_PIN]:
         GPIO.add_event_detect(pin, GPIO.BOTH, callback=rx_callback, bouncetime=20)
     while True:
-        states.extend_history()
-        sleep(0.05)
+        # states.extend_history()
+        sleep(0.01)
         
 except KeyboardInterrupt:
     Print("Exiting...")
@@ -90,6 +94,6 @@ except KeyboardInterrupt:
     
     # Plot the state history
     # states.plot_history()
-    states.subplot_history()
+    # states.subplot_history()
     
     exit()
