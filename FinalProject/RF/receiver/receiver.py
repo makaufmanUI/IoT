@@ -27,7 +27,6 @@ app = firebase_admin.initialize_app(creds, {
 })
 
 ref = db.reference("/")
-# ref = db.reference("/emergExists")
 
 
 
@@ -73,21 +72,14 @@ def rx_callback(channel: int) -> None:
         `channel` : The channel that the signal was received on
     """
     pin = {NORTH_PIN: "North", SOUTH_PIN: "South", EAST_PIN: "East", WEST_PIN: "West", COMMON_PIN: "Common"}[channel]
-    if pin == "North":
+    if pin == "Common":
         if GPIO.input(channel):
             # Update "emergExists" in db to True
             ref.update({"emergExists": True})
-    
-    elif pin == "East":
-        if GPIO.input(channel):
-            # Update "emergExists" in db to False
-            ref.update({"emergExists": False})
-            
-    #if pin == "Common":
-        #if GPIO.input(channel):
-            #Print("COMMON high")
-        #else:
-            #Print("COMMON low")
+            Print("Updated 'emergExists' to True.")
+            Print("Killing program.")
+            GPIO.cleanup()
+            exit()
 
         
 
