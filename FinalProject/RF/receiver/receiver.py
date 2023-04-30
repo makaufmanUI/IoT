@@ -74,10 +74,11 @@ def rx_callback(channel: int) -> None:
     pin = {NORTH_PIN: "North", SOUTH_PIN: "South", EAST_PIN: "East", WEST_PIN: "West", COMMON_PIN: "Common"}[channel]
     if pin == "Common":
         if GPIO.input(channel):
+            Print("Received signal from transmitter...")
             # Update "emergExists" in db to True
             ref.update({"emergExists": True})
             Print("Updated 'emergExists' to True.")
-            Print("Killing program.")
+            Print("Killing program...")
             GPIO.cleanup()
             exit()
 
