@@ -29,9 +29,11 @@ def Print(string: str) -> None:
 # Define pins
 NORTH_PIN  = 23     # (GPIO 23) [Green]
 SOUTH_PIN  = 24     # (GPIO 24) [Blue]
-EAST_PIN   = 25     # (GPIO 25) [White]
+# EAST_PIN   = 25     # (GPIO 25) [White]
+EAST_PIN   = 26     # (GPIO 25) [White]
 WEST_PIN   = 12     # (GPIO 12) [Yellow]
-COMMON_PIN = 16     # (GPIO 16) [Striped Green]
+COMMON_PIN =  6     # (GPIO 16) [Striped Green]
+# COMMON_PIN = 16     # (GPIO 16) [Striped Green]
 
 
 # Set up the GPIO pins
